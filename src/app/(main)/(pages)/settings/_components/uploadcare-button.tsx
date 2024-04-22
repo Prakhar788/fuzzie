@@ -2,6 +2,7 @@
 import React, { useEffect, useRef } from 'react'
 import * as LR from '@uploadcare/blocks'
 import { useRouter } from 'next/navigation'
+import { PACKAGE_VERSION } from '@uploadcare/blocks';
 
 type Props = {
   onUpload: (e: string) => any
@@ -22,19 +23,24 @@ const UploadCareButton = ({ onUpload }: Props) => {
         router.refresh()
       }
     }
-    ctxProviderRef.current.addEventListener('file-upload-success', handleUpload)
+    const ctxProvider = ctxProviderRef.current;
+    if (ctxProvider) {
+    ctxProvider.addEventListener('file-upload-success', handleUpload)
+    }
+
+    //ctxProviderRef.current.addEventListener('file-upload-success', handleUpload)
   }, [])
 
   return (
     <div>
-      <lr-config
+       <lr-config
         ctx-name="my-uploader"
-        pubkey="a9428ff5ff90ae7a64eb"
+        pubkey="072f252331a11219a8da"
       />
 
       <lr-file-uploader-regular
         ctx-name="my-uploader"
-        css-src={`https://cdn.jsdelivr.net/npm/@uploadcare/blocks@0.35.2/web/lr-file-uploader-regular.min.css`}
+        css-src={`https://cdn.jsdelivr.net/npm/@uploadcare/blocks@${PACKAGE_VERSION}/web/lr-file-uploader-regular.min.css`}
       />
 
       <lr-upload-ctx-provider
